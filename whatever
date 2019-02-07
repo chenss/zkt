@@ -1,0 +1,102 @@
+<html>
+<head>
+	<title>考勤管理</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<!-- <meta http-equiv="Refresh" content="3000; URL=http://10.115.131.221:60" -->
+	<style>
+	#div0 {margin-left:20%;float:left;font-family:"黑体";font-size:36px}
+	#div1 {margin-top:1%;width:10%;height:10%;background:gray;}
+	</style>
+	<script type="text/javascript">
+	
+	function jialing(j){
+        if(j<10) return "0" +""+ j;
+        else return j;
+    }
+
+	function kaoqin(bh, sx, i){
+		var now = new Date();
+		
+        var nian=jialing(now.getFullYear());//获取四位数年数
+        var yue=jialing(now.getMonth()+1);//月
+        var ri=jialing(now.getDate());//日
+		var shi = jialing(i);//时
+		var shuijishu1 = Math.floor(Math.random()*30);
+		var shuijishu2 = Math.floor(Math.random()*60);
+		var fen = (shuijishu1 < 10) ? ("0" + shuijishu1) : shuijishu1;//分
+		var miao = (shuijishu2 < 10) ? ("0" + shuijishu2) : shuijishu2;//秒
+		var shijian= nian + "-" + yue + "-" + ri + " " + shi + ":" + fen + ":" + miao;//这种格式： 1996-02-28 08：15：36
+		var url="http://10.115.131.221:8001/iclock/cdata?SN=3394171701181&table=ATTLOG&Stamp=9999 HTTP/1.1";
+		var qiandao=new XMLHttpRequest();
+		
+		qiandao.open("POST",url,true);
+		qiandao.setRequestHeader("Content-type","application/-www-form-urlencoded");
+		qiandao.setRequestHeader("User-Agent", "iClock Proxy/1.09");
+    qiandao.setRequestHeader("Referer", "http://10.115.131.221:8001/iclock/cdata?SN=3394171701181&table=ATTLOG&Stamp=9999"); 
+		//qiandao.setRequestHeader("protocol", "HTTP/1.1");
+		qiandao.send(bh + "	" + shijian + "	" + sx + "	15	0	0");
+		
+		//To be or not to be, this is a problem.
+		var jieguo = document.getElementById(bh);
+		jieguo.style.background = "";
+		qiandao.onreadystatechange=function(){
+
+			if (qiandao.readyState==4 && qiandao.status == 200){
+				jieguo.style.background = "green";
+			}
+			else if(qiandao.readyState==4 && qiandao.status != 200){
+				jieguo.style.background = "red";
+				}
+		}
+		//alert(shijian);
+	}
+	
+	</script>
+	
+</head>
+<body>
+	
+<table id="div0" width="500" border="1">
+  <tr>
+    <td><table  width="500" border="1">
+  <tr>
+    <td>CSS</td>
+    <td id="22113"><input type="button" value="上班" onClick="kaoqin(22113, 0, 8)"><input style="float:right" type="button" value="下班" onClick="kaoqin(22113, 1, 17)"></td>
+    <td></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>WGR</td>
+    <td><input type="button" value="上班" onClick="kaoqin(8)"><input style="float:right" type="button" value="下班" onClick="kaoqin(17)"></td>
+    <td id=""></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>ZPF</td>
+    <td><input type="button" value="上班" onClick="kaoqin(8)"><input style="float:right" type="button" value="下班" onClick="kaoqin(17)"></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>WY</td>
+    <td><input type="button" value="上班" onClick="kaoqin(8)"><input style="float:right" type="button" value="下班" onClick="kaoqin(17)"></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>MLJ</td>
+    <td><input type="button" value="上班" onClick="kaoqin(8)"><input style="float:right" type="button" value="下班" onClick="kaoqin(17)"></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</td>
+  </tr>
+  <tr>
+    <td ><input type="button" value="上班" onClick="kaoqin(8)"><input style="float:right" type="button" value="下班" onClick="kaoqin(17)"></td>
+  </tr>
+</table>
+
+
+</body>
+</html>
