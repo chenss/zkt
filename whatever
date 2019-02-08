@@ -1,9 +1,11 @@
+<!-- CORS问题始终解决不了，完全不懂啊。IE11亲测可用，其它浏览器不行。不改了，就这样吧。 -->
 <html>
 <head>
 	<title>考勤管理</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<!-- <meta http-equiv="Refresh" content="3000; URL=http://10.115.131.221:60" -->
+	<!-- <meta http-equiv="Refresh" content="3000; URL=http://www.google.com" -->
 	<style>
+	//保留着，或许以后会用
 	#div0 {margin-left:20%;float:left;font-family:"黑体";font-size:36px}
 	#div1 {margin-top:1%;width:10%;height:10%;background:gray;}
 	</style>
@@ -14,27 +16,27 @@
         else return j;
     }
 
-	function kaoqin(bh, sx, i){
+	function kaoqin(bh,         sx,        i){
+	//kaoqin(个人在考勤机中的编号,签到or签退,根据上班or下班的时间填)
 		var now = new Date();
 		
-        var nian=jialing(now.getFullYear());//获取四位数年数
-        var yue=jialing(now.getMonth()+1);//月
-        var ri=jialing(now.getDate());//日
+	        var nian=jialing(now.getFullYear());//获取四位数年数
+	        var yue=jialing(now.getMonth()+1);//月
+	        var ri=jialing(now.getDate());//日
 		var shi = jialing(i);//时
 		var shuijishu1 = Math.floor(Math.random()*30);
 		var shuijishu2 = Math.floor(Math.random()*60);
 		var fen = (shuijishu1 < 10) ? ("0" + shuijishu1) : shuijishu1;//分
 		var miao = (shuijishu2 < 10) ? ("0" + shuijishu2) : shuijishu2;//秒
-		var shijian= nian + "-" + yue + "-" + ri + " " + shi + ":" + fen + ":" + miao;//这种格式： 1996-02-28 08：15：36
-		var url="http://10.115.131.221:8001/iclock/cdata?SN=3394171701181&table=ATTLOG&Stamp=9999 HTTP/1.1";
+		var shijian= nian + "-" + yue + "-" + ri + " " + shi + ":" + fen + ":" + miao;//这种格式： 1996-02-28 08:15:36
+		var url="http://考勤服务器IP:端口/iclock/cdata?SN=考勤机编号&table=ATTLOG&Stamp=9999";//根据实际情况修改
 		var qiandao=new XMLHttpRequest();
-		
+
 		qiandao.open("POST",url,true);
 		qiandao.setRequestHeader("Content-type","application/-www-form-urlencoded");
-		qiandao.setRequestHeader("User-Agent", "iClock Proxy/1.09");
-    qiandao.setRequestHeader("Referer", "http://10.115.131.221:8001/iclock/cdata?SN=3394171701181&table=ATTLOG&Stamp=9999"); 
-		//qiandao.setRequestHeader("protocol", "HTTP/1.1");
-		qiandao.send(bh + "	" + shijian + "	" + sx + "	15	0	0");
+		qiandao.setRequestHeader("User-Agent", "iClock Proxy/1.09");//根据标准，一些浏览器已经不支持设置User-Agent了
+		qiandao.setRequestHeader("protocol", "HTTP/1.1");//这个东西我也不知道写的对不对，能用就行
+		qiandao.send(bh + "	" + shijian + "	" + sx + "	15	0	0");//注意格式，详见README中参考资料1
 		
 		//To be or not to be, this is a problem.
 		var jieguo = document.getElementById(bh);
@@ -42,13 +44,13 @@
 		qiandao.onreadystatechange=function(){
 
 			if (qiandao.readyState==4 && qiandao.status == 200){
-				jieguo.style.background = "green";
+				jieguo.style.background = "green";//签到成功背景变绿
 			}
 			else if(qiandao.readyState==4 && qiandao.status != 200){
-				jieguo.style.background = "red";
+				jieguo.style.background = "red";//失败变红
 				}
 		}
-		//alert(shijian);
+		//alert(bh + "	" + shijian + "	" + sx + "	15	0	0");
 	}
 	
 	</script>
