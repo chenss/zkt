@@ -102,47 +102,47 @@
   }
 
   function allUserKaoqin(){
-    //魏光润
+    //wgr
     kaoqin(21958, 0, 7)
     kaoqin(21958, 10, 11)
     kaoqin(21958, 1, 16)
-    //刘天生
+    //lts
     kaoqin(22598, 0, 7)
     kaoqin(22598, 10, 11)
     kaoqin(22598, 1, 16)
-    //陆继璠
+    //ljf
     kaoqin(20934, 0, 7)
     kaoqin(20934, 10, 11)
     kaoqin(20934, 1, 16)
-    //苏晓东
+    //sxd
     kaoqin(20229, 0, 7)
     kaoqin(20229, 10, 11)
     kaoqin(20229, 1, 16)
-    //杨孔明
+    //ykm
     kaoqin(20350, 0, 7)
     kaoqin(20350, 10, 11)
     kaoqin(20350, 1, 16)
-    //赵体轩
+    //ztx
     kaoqin(20258, 0, 7)
     kaoqin(20258, 10, 11)
     kaoqin(20258, 1, 16)
-    //李红洁
+    //lhj
     kaoqin(21945, 0, 7)
     kaoqin(21945, 10, 11)
     kaoqin(21945, 1, 16)
-    //张秀明
+    //zxm
     kaoqin(22314, 0, 7)
     kaoqin(22314, 10, 11)
     kaoqin(22314, 1, 16)
-    //徐强
+    //xq
     kaoqin(21883, 0, 7)
     kaoqin(21883, 10, 11)
     kaoqin(21883, 1, 16)
-    //陈帅帅
+    //css
     kaoqin(22113, 0, 7)
     kaoqin(22113, 10, 11)
     kaoqin(22113, 1, 16)
-    //柴天烁
+    //cts
     kaoqin(23649, 0, 7)
     kaoqin(23649, 10, 11)
     kaoqin(23649, 1, 16)
@@ -175,77 +175,77 @@
   <tr id="21958" bgcolor="#ADABF2">
     <td><input type="button" value="上班" onClick="kaoqin(21958, 0, 7)"></td>
     <td><input type="button" value="中午上下班" onClick="kaoqin(21958, 10, 11)"></td>
-    <td>魏光润</td>
+    <td>wgr</td>
     <td><input type="button" value="下班" onClick="kaoqin(21958, 1, 16)"></td>
     <td><input type="button" value="全天上下班" onClick="allDayKaoqin(21958)"></td>
   </tr>
   <tr id="22598">
     <td><input type="button" value="上班" onClick="kaoqin(22598, 0, 7)"></td>
     <td><input type="button" value="中午上下班" onClick="kaoqin(22598, 10, 11)"></td>
-    <td>刘天生</td>
+    <td>lts</td>
     <td><input type="button" value="下班" onClick="kaoqin(22598, 1, 16)"></td>
     <td><input type="button" value="全天上下班" onClick="allDayKaoqin(22598)"></td>
   </tr>
   <tr id="20934" bgcolor="#BD9C8F">
     <td><input type="button" value="上班" onClick="kaoqin(20934, 0, 7)"></td>
     <td><input type="button" value="中午上下班" onClick="kaoqin(20934, 10, 11)"></td>
-    <td>陆继璠</td>
+    <td>ljf</td>
     <td><input type="button" value="下班" onClick="kaoqin(20934, 1, 16)"></td>
     <td><input type="button" value="全天上下班" onClick="allDayKaoqin(20934)"></td>
   </tr>
   <tr id="20229">
     <td><input type="button" value="上班" onClick="kaoqin(20229, 0, 7)"></td>
     <td><input type="button" value="中午上下班" onClick="kaoqin(20229, 10, 11)"></td>
-    <td>苏晓东</td>
+    <td>sxd</td>
     <td><input type="button" value="下班" onClick="kaoqin(20229, 1, 16)"></td>
     <td><input type="button" value="全天上下班" onClick="allDayKaoqin(20229)"></td>
   </tr>
   <tr id="20350" bgcolor="#ADABF2">
     <td><input type="button" value="上班" onClick="kaoqin(20350, 0, 7)"></td>
     <td><input type="button" value="中午上下班" onClick="kaoqin(20350, 10, 11)"></td>
-    <td>杨孔明</td>
+    <td>ykm</td>
     <td><input type="button" value="下班" onClick="kaoqin(20350, 1, 16)"></td>
     <td><input type="button" value="全天上下班" onClick="allDayKaoqin(20350)"></td>
   </tr>
   <tr id="20258">
     <td><input type="button" value="上班" onClick="kaoqin(20258, 0, 7)"></td>
     <td><input type="button" value="中午上下班" onClick="kaoqin(20258, 10, 11)"></td>
-    <td>赵体轩</td>
+    <td>ztx</td>
     <td><input type="button" value="下班" onClick="kaoqin(20258, 1, 16)"></td>
     <td><input type="button" value="全天上下班" onClick="allDayKaoqin(20258)"></td>
   </tr>
   <tr id="21945" bgcolor="#BD9C8F">
     <td><input type="button" value="上班" onClick="kaoqin(21945, 0, 7)"></td>
     <td><input type="button" value="中午上下班" onClick="kaoqin(21945, 10, 11)"></td>
-    <td>李红洁</td>
+    <td>lhj</td>
     <td><input type="button" value="下班" onClick="kaoqin(21945, 1, 16)"></td>
     <td><input type="button" value="全天上下班" onClick="allDayKaoqin(21945)"></td>
   </tr>
   <tr id="22314">
     <td><input type="button" value="上班" onClick="kaoqin(22314, 0, 7)"></td>
     <td><input type="button" value="中午上下班" onClick="kaoqin(22314, 10, 11)"></td>
-    <td>张秀明</td>
+    <td>zxm</td>
     <td><input type="button" value="下班" onClick="kaoqin(22314, 1, 16)"></td>
     <td><input type="button" value="全天上下班" onClick="allDayKaoqin(22314)"></td>
   </tr>
   <tr id="21883" bgcolor="#ADABF2">
     <td><input type="button" value="上班" onClick="kaoqin(21883, 0, 7)"></td>
     <td><input type="button" value="中午上下班" onClick="kaoqin(21883, 10, 11)"></td>
-    <td>徐强</td>
+    <td>xq</td>
     <td><input type="button" value="下班" onClick="kaoqin(21883, 1, 16)"></td>
     <td><input type="button" value="全天上下班" onClick="allDayKaoqin(21883)"></td>
   </tr>
   <tr id="22113">
     <td><input type="button" value="上班" onClick="kaoqin(22113, 0, 7)"></td>
     <td><input type="button" value="中午上下班" onClick="kaoqin(22113, 10, 11)"></td>
-    <td>陈帅帅</td>
+    <td>css</td>
     <td><input type="button" value="下班" onClick="kaoqin(22113, 1, 16)"></td>
     <td><input type="button" value="全天上下班" onClick="allDayKaoqin(22113)"></td>
   </tr>
   <tr id="23649" bgcolor="#BD9C8F">
     <td><input type="button" value="上班" onClick="kaoqin(23649, 0, 7)"></td>
     <td><input type="button" value="中午上下班" onClick="kaoqin(23649, 10, 11)"></td>
-    <td>柴天烁</td>
+    <td>cts</td>
     <td><input type="button" value="下班" onClick="kaoqin(23649, 1, 16)"></td>
     <td><input type="button" value="全天上下班" onClick="allDayKaoqin(23649)"></td>
   </tr>
