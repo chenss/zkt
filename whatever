@@ -1,101 +1,259 @@
-<!-- CORS问题始终解决不了，完全不懂啊。IE11亲测可用，其它浏览器不行。不改了，就这样吧。 -->
 <html>
 <head>
-	<title>考勤管理</title>
+	<title>签到签退表</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<!-- <meta http-equiv="Refresh" content="3000; URL=http://www.google.com" -->
+	<!-- <meta http-equiv="Refresh" content="3000; URL=http://10.115.131.221:60/kq/sys/main/SysMain_enterMainFrame.action"> -->
 	<style>
-	//保留着，或许以后会用
-	#div0 {margin-left:20%;float:left;font-family:"黑体";font-size:36px}
-	#div1 {margin-top:1%;width:10%;height:10%;background:gray;}
+	    body {text-align: center; font-size: 24px;}
+    	select {text-align: center; font-size: 24px;}
+        option {text-align: center; font-size: 24px;}
+        td {text-align: center; font-size: 24px;}
+        input {text-align: center; font-size: 24px;}
+	    #div0 {text-align: center; margin-left:20%;float:left;font-family:"黑体";font-size:36px}
 	</style>
 	<script type="text/javascript">
 	
 	function jialing(j){
-        if(j<10) return "0" +""+ j;
+        if(j<10) return "0" + j;
         else return j;
     }
 
-	function kaoqin(bh,         sx,        i){
-	//kaoqin(个人在考勤机中的编号,签到or签退,根据上班or下班的时间填)
-		var now = new Date();
-		
-	        var nian=jialing(now.getFullYear());//获取四位数年数
-	        var yue=jialing(now.getMonth()+1);//月
-	        var ri=jialing(now.getDate());//日
-		var shi = jialing(i);//时
-		var shuijishu1 = Math.floor(Math.random()*30);
-		var shuijishu2 = Math.floor(Math.random()*60);
-		var fen = (shuijishu1 < 10) ? ("0" + shuijishu1) : shuijishu1;//分
-		var miao = (shuijishu2 < 10) ? ("0" + shuijishu2) : shuijishu2;//秒
-		var shijian= nian + "-" + yue + "-" + ri + " " + shi + ":" + fen + ":" + miao;//这种格式： 1996-02-28 08:15:36
-		var url="http://考勤服务器IP:端口/iclock/cdata?SN=考勤机编号&table=ATTLOG&Stamp=9999";//根据实际情况修改
-		var qiandao=new XMLHttpRequest();
+    function setdate(){
+        var now = new Date();
+        var nian=jialing(now.getFullYear());//获取四位数年数
+        var yue=jialing(now.getMonth()+1);//月
+        var ri=jialing(now.getDate());//日
+        var date = nian + "-" + yue + "-" + ri
+        document.getElementById('dateInput').value = date;
+    }
+    
+	function kaoqin(bh, sx, i){
 
-		qiandao.open("POST",url,true);
-		qiandao.setRequestHeader("Content-type","application/-www-form-urlencoded");
-		qiandao.setRequestHeader("User-Agent", "iClock Proxy/1.09");//根据标准，一些浏览器已经不支持设置User-Agent了
-		qiandao.setRequestHeader("protocol", "HTTP/1.1");//这个东西我也不知道写的对不对，能用就行
-		qiandao.send(bh + "	" + shijian + "	" + sx + "	15	0	0");//注意格式，详见README中参考资料1
+        var date = document.getElementById('dateInput').value
+    		var shi = jialing(i);//时
+    		var shuijishu1 = Math.floor(Math.random()*30) + 30;
+    		var shuijishu2 = Math.floor(Math.random()*60);
+    		var shuijishu3 = Math.floor(Math.random()*60);
+    		var fen = jialing(shuijishu1);//分  (shuijishu1 < 10) ? ("0" + shuijishu1) : shuijishu1
+    		var xfen = fen;//中午签退的分  (shuijishu1 < 10) ? ("0" + shuijishu1) : shuijishu1
+    		var sfen = jialing(Math.floor(Math.random()*(60 - xfen)) + xfen);//中午签到的分，先下后上，取xfen与30之间的随机数。
+    		var miao = jialing(shuijishu2);//秒  (shuijishu2 < 10) ? ("0" + shuijishu2) : shuijishu2
+    		var xmiao = miao;
+    		var smiao = jialing(shuijishu3);
+    		var shijian = date + " " + shi + ":" + fen + ":" + miao;//这种格式： 1996-02-28 08:15:36
+    		var xshijian = date + " " + shi + ":" + xfen + ":" + xmiao;
+    		var sshijian = date + " " + shi + ":" + sfen + ":" + smiao;//中午签到时间，这种格式：1996-02-28 11:15:36，可能会超时，例如规定11:30:00上班，但sshijian最大是11:30:59
+    		var kaoqinji = document.getElementById('SN').value
+            var url = "http://10.115.131.221:8001/iclock/cdata?SN=" + kaoqinji + "&table=ATTLOG&Stamp=9999";
+            //alert(url)
+		
+		//中午签退and签到
+		if (sx==10){
+			var qiandao=new XMLHttpRequest();
+			var qiantui=new XMLHttpRequest();
+
+			qiantui.open("POST",url,true);
+			qiantui.setRequestHeader("Content-type","application/-www-form-urlencoded");
+			qiantui.setRequestHeader("User-Agent", "iClock Proxy/1.09");
+			qiantui.setRequestHeader("protocol", "HTTP/1.1");
+			qiantui.send(bh + "	" + xshijian + "	" + "1" + "	15	0	0");
+			//alert(bh + "	" + xshijian + "	" + "1" + "	15	0	0")
+
+			qiandao.open("POST",url,true);
+			qiandao.setRequestHeader("Content-type","application/-www-form-urlencoded");
+			qiandao.setRequestHeader("User-Agent", "iClock Proxy/1.09");
+			qiandao.setRequestHeader("protocol", "HTTP/1.1");
+			qiandao.send(bh + "	" + sshijian + "	" + "0" + "	15	0	0");
+			//alert(bh + "	" + sshijian + "	" + "0" + "	15	0	0")
+		} 
+		
+		//早上签到or下午签退
+		else{
+			var qiandao=new XMLHttpRequest();
+
+			qiandao.open("POST",url,true);
+			qiandao.setRequestHeader("Content-type","application/-www-form-urlencoded");
+			qiandao.setRequestHeader("User-Agent", "iClock Proxy/1.09");
+			qiandao.setRequestHeader("protocol", "HTTP/1.1");
+			qiandao.send(bh + "	" + shijian + "	" + sx + "	15	0	0");			
+		};
+		
+  
 		
 		//To be or not to be, this is a problem.
 		var jieguo = document.getElementById(bh);
-		jieguo.style.background = "";
+		jieguo.style.background = "yellow";
 		qiandao.onreadystatechange=function(){
 
 			if (qiandao.readyState==4 && qiandao.status == 200){
-				jieguo.style.background = "green";//签到成功背景变绿
+				jieguo.style.background = "green";
 			}
 			else if(qiandao.readyState==4 && qiandao.status != 200){
-				jieguo.style.background = "red";//失败变红
-				}
+				jieguo.style.background = "red";
+			}
 		}
 		//alert(bh + "	" + shijian + "	" + sx + "	15	0	0");
 	}
+
+  function allDayKaoqin(bh){
+    kaoqin(bh, 0, 7)
+    kaoqin(bh, 10, 11)
+    kaoqin(bh, 1, 16)
+  }
+
+  function allUserKaoqin(){
+    //魏光润
+    kaoqin(21958, 0, 7)
+    kaoqin(21958, 10, 11)
+    kaoqin(21958, 1, 16)
+    //刘天生
+    kaoqin(22598, 0, 7)
+    kaoqin(22598, 10, 11)
+    kaoqin(22598, 1, 16)
+    //陆继璠
+    kaoqin(20934, 0, 7)
+    kaoqin(20934, 10, 11)
+    kaoqin(20934, 1, 16)
+    //苏晓东
+    kaoqin(20229, 0, 7)
+    kaoqin(20229, 10, 11)
+    kaoqin(20229, 1, 16)
+    //杨孔明
+    kaoqin(20350, 0, 7)
+    kaoqin(20350, 10, 11)
+    kaoqin(20350, 1, 16)
+    //赵体轩
+    kaoqin(20258, 0, 7)
+    kaoqin(20258, 10, 11)
+    kaoqin(20258, 1, 16)
+    //李红洁
+    kaoqin(21945, 0, 7)
+    kaoqin(21945, 10, 11)
+    kaoqin(21945, 1, 16)
+    //张秀明
+    kaoqin(22314, 0, 7)
+    kaoqin(22314, 10, 11)
+    kaoqin(22314, 1, 16)
+    //徐强
+    kaoqin(21883, 0, 7)
+    kaoqin(21883, 10, 11)
+    kaoqin(21883, 1, 16)
+    //陈帅帅
+    kaoqin(22113, 0, 7)
+    kaoqin(22113, 10, 11)
+    kaoqin(22113, 1, 16)
+    //柴天烁
+    kaoqin(23649, 0, 7)
+    kaoqin(23649, 10, 11)
+    kaoqin(23649, 1, 16)
+  }
 	
 	</script>
 	
 </head>
-<body>
+<body onload="setdate()">
 	
-<table id="div0" width="500" border="1">
+<table id="div0" width="600" border="1">
   <tr>
-    <td><table  width="500" border="1">
-  <tr>
-    <td>CSS</td>
-    <td id="22113"><input type="button" value="上班" onClick="kaoqin(22113, 0, 8)"><input style="float:right" type="button" value="下班" onClick="kaoqin(22113, 1, 17)"></td>
-    <td></td>
-    <td>&nbsp;</td>
+    <td>
+      <label for="dateInput">日期：</label>
+      <input type="date" id="dateInput" name="date">
+      <label for="SN">考勤机:</label>
+      <select id="SN" name="SN">
+        <option value="6416151701818">程家庄</option>
+        <option value="3394171701181">凫村</option>
+        <option value="6416151103536">邹城</option>
+        <option value="3394171701180">曲阜</option>
+        <option value="3394171701174">南陶洛</option>
+        <option value="cbp9191460637">泗水</option>
+        <option value="CBP9191460686">车间</option>
+      </select>
+    </td>
   </tr>
   <tr>
-    <td>WGR</td>
-    <td><input type="button" value="上班" onClick="kaoqin(8)"><input style="float:right" type="button" value="下班" onClick="kaoqin(17)"></td>
-    <td id=""></td>
-    <td>&nbsp;</td>
+    <td><table  width="600" border="1">
+  <tr id="21958" bgcolor="#ADABF2">
+    <td><input type="button" value="上班" onClick="kaoqin(21958, 0, 7)"></td>
+    <td><input type="button" value="中午上下班" onClick="kaoqin(21958, 10, 11)"></td>
+    <td>魏光润</td>
+    <td><input type="button" value="下班" onClick="kaoqin(21958, 1, 16)"></td>
+    <td><input type="button" value="全天上下班" onClick="allDayKaoqin(21958)"></td>
   </tr>
-  <tr>
-    <td>ZPF</td>
-    <td><input type="button" value="上班" onClick="kaoqin(8)"><input style="float:right" type="button" value="下班" onClick="kaoqin(17)"></td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
+  <tr id="22598">
+    <td><input type="button" value="上班" onClick="kaoqin(22598, 0, 7)"></td>
+    <td><input type="button" value="中午上下班" onClick="kaoqin(22598, 10, 11)"></td>
+    <td>刘天生</td>
+    <td><input type="button" value="下班" onClick="kaoqin(22598, 1, 16)"></td>
+    <td><input type="button" value="全天上下班" onClick="allDayKaoqin(22598)"></td>
   </tr>
-  <tr>
-    <td>WY</td>
-    <td><input type="button" value="上班" onClick="kaoqin(8)"><input style="float:right" type="button" value="下班" onClick="kaoqin(17)"></td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
+  <tr id="20934" bgcolor="#BD9C8F">
+    <td><input type="button" value="上班" onClick="kaoqin(20934, 0, 7)"></td>
+    <td><input type="button" value="中午上下班" onClick="kaoqin(20934, 10, 11)"></td>
+    <td>陆继璠</td>
+    <td><input type="button" value="下班" onClick="kaoqin(20934, 1, 16)"></td>
+    <td><input type="button" value="全天上下班" onClick="allDayKaoqin(20934)"></td>
   </tr>
-  <tr>
-    <td>MLJ</td>
-    <td><input type="button" value="上班" onClick="kaoqin(8)"><input style="float:right" type="button" value="下班" onClick="kaoqin(17)"></td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
+  <tr id="20229">
+    <td><input type="button" value="上班" onClick="kaoqin(20229, 0, 7)"></td>
+    <td><input type="button" value="中午上下班" onClick="kaoqin(20229, 10, 11)"></td>
+    <td>苏晓东</td>
+    <td><input type="button" value="下班" onClick="kaoqin(20229, 1, 16)"></td>
+    <td><input type="button" value="全天上下班" onClick="allDayKaoqin(20229)"></td>
+  </tr>
+  <tr id="20350" bgcolor="#ADABF2">
+    <td><input type="button" value="上班" onClick="kaoqin(20350, 0, 7)"></td>
+    <td><input type="button" value="中午上下班" onClick="kaoqin(20350, 10, 11)"></td>
+    <td>杨孔明</td>
+    <td><input type="button" value="下班" onClick="kaoqin(20350, 1, 16)"></td>
+    <td><input type="button" value="全天上下班" onClick="allDayKaoqin(20350)"></td>
+  </tr>
+  <tr id="20258">
+    <td><input type="button" value="上班" onClick="kaoqin(20258, 0, 7)"></td>
+    <td><input type="button" value="中午上下班" onClick="kaoqin(20258, 10, 11)"></td>
+    <td>赵体轩</td>
+    <td><input type="button" value="下班" onClick="kaoqin(20258, 1, 16)"></td>
+    <td><input type="button" value="全天上下班" onClick="allDayKaoqin(20258)"></td>
+  </tr>
+  <tr id="21945" bgcolor="#BD9C8F">
+    <td><input type="button" value="上班" onClick="kaoqin(21945, 0, 7)"></td>
+    <td><input type="button" value="中午上下班" onClick="kaoqin(21945, 10, 11)"></td>
+    <td>李红洁</td>
+    <td><input type="button" value="下班" onClick="kaoqin(21945, 1, 16)"></td>
+    <td><input type="button" value="全天上下班" onClick="allDayKaoqin(21945)"></td>
+  </tr>
+  <tr id="22314">
+    <td><input type="button" value="上班" onClick="kaoqin(22314, 0, 7)"></td>
+    <td><input type="button" value="中午上下班" onClick="kaoqin(22314, 10, 11)"></td>
+    <td>张秀明</td>
+    <td><input type="button" value="下班" onClick="kaoqin(22314, 1, 16)"></td>
+    <td><input type="button" value="全天上下班" onClick="allDayKaoqin(22314)"></td>
+  </tr>
+  <tr id="21883" bgcolor="#ADABF2">
+    <td><input type="button" value="上班" onClick="kaoqin(21883, 0, 7)"></td>
+    <td><input type="button" value="中午上下班" onClick="kaoqin(21883, 10, 11)"></td>
+    <td>徐强</td>
+    <td><input type="button" value="下班" onClick="kaoqin(21883, 1, 16)"></td>
+    <td><input type="button" value="全天上下班" onClick="allDayKaoqin(21883)"></td>
+  </tr>
+  <tr id="22113">
+    <td><input type="button" value="上班" onClick="kaoqin(22113, 0, 7)"></td>
+    <td><input type="button" value="中午上下班" onClick="kaoqin(22113, 10, 11)"></td>
+    <td>陈帅帅</td>
+    <td><input type="button" value="下班" onClick="kaoqin(22113, 1, 16)"></td>
+    <td><input type="button" value="全天上下班" onClick="allDayKaoqin(22113)"></td>
+  </tr>
+  <tr id="23649" bgcolor="#BD9C8F">
+    <td><input type="button" value="上班" onClick="kaoqin(23649, 0, 7)"></td>
+    <td><input type="button" value="中午上下班" onClick="kaoqin(23649, 10, 11)"></td>
+    <td>柴天烁</td>
+    <td><input type="button" value="下班" onClick="kaoqin(23649, 1, 16)"></td>
+    <td><input type="button" value="全天上下班" onClick="allDayKaoqin(23649)"></td>
   </tr>
 </table>
 </td>
   </tr>
   <tr>
-    <td ><input type="button" value="上班" onClick="kaoqin(8)"><input style="float:right" type="button" value="下班" onClick="kaoqin(17)"></td>
+    <td ><input type="button" value="所 有 人 上 下 班" onClick="allUserKaoqin()"></td>
   </tr>
 </table>
 
