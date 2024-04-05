@@ -160,13 +160,13 @@
       <input type="date" id="dateInput" name="date">
       <label for="SN">考勤机:</label>
       <select id="SN" name="SN">
-        <option value="6416151701818">程家庄</option>
-        <option value="3394171701181">凫村</option>
-        <option value="6416151103536">邹城</option>
-        <option value="3394171701180">曲阜</option>
-        <option value="3394171701174">南陶洛</option>
-        <option value="cbp9191460637">泗水</option>
-        <option value="CBP9191460686">车间</option>
+        <option value="6416151701818">cjz</option>
+        <option value="3394171701181">fc</option>
+        <option value="6416151103536">zc</option>
+        <option value="3394171701180">qf</option>
+        <option value="3394171701174">ntl</option>
+        <option value="cbp9191460637">ss</option>
+        <option value="CBP9191460686">cj</option>
       </select>
     </td>
   </tr>
